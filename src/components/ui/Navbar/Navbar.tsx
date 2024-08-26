@@ -1,23 +1,25 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import logo from "@/assets/WashNGo-logo-white.png";
 import { Button, Drawer } from "antd";
-import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks/ReduxHook";
-import {
-  currentToken,
-  logout,
-} from "@/redux/features/auth/authSlice";
-type TLinks = {
+import { currentToken, logout } from "@/redux/features/auth/authSlice";
+import { jwtDecode } from "jwt-decode";
+export type TLinks = {
   path: string;
   name: string;
-  children?: TLinks[];
+  NotAllow?: string;
+  userRequired?: boolean;
 };
 
 const Navbar = () => {
-  const user = useAppSelector(currentToken);
+  const token = useAppSelector(currentToken);
+  let user: any = {};
+  if (token) {
+    user = jwtDecode(token);
+  }
+  const role = user?.role;
   const dispatch = useAppDispatch();
-  const [dropdown, setDropdown] = useState(false);
   const [open, setOpen] = useState(false);
 
   const location = useLocation();
@@ -40,6 +42,12 @@ const Navbar = () => {
     {
       path: "/booking",
       name: "Booking",
+      NotAllow: "admin",
+    },
+    {
+      path: "/dashboard",
+      name: "dashboard",
+      userRequired: true,
     },
   ];
   return (
@@ -54,7 +62,7 @@ const Navbar = () => {
             <span className="text-white font-bold text-center">WashNGo</span>
           </Link>
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            {user ? (
+            {token ? (
               <Button
                 size="large"
                 type="primary"
@@ -97,41 +105,20 @@ const Navbar = () => {
             <Drawer onClose={onClose} open={open}>
               <ul>
                 {links?.map((item) => {
-                  if (!item?.children) {
-                    return (
-                      <li className="mb-4" key={item.name}>
-                        <NavLink
-                          to={item?.path}
-                          className="py-2 px-3 border block text-center font-semibold rounded hover:text-white hover:bg-hover capitalize"
-                        >
-                          {item?.name}
-                        </NavLink>
-                      </li>
-                    );
+                  if (item?.NotAllow && item?.NotAllow === role) {
+                    return;
+                  }
+                  if (item?.userRequired && !token) {
+                    return;
                   }
                   return (
                     <li className="mb-4" key={item.name}>
-                      <a
-                        onClick={() => setDropdown(!dropdown)}
-                        className="py-2 px-3 border block text-center font-semibold rounded cursor-pointer hover:text-white hover:bg-hover capitalize"
+                      <NavLink
+                        to={item?.path}
+                        className="py-2 px-3 border block text-center font-semibold rounded hover:text-white hover:bg-hover capitalize"
                       >
-                        {item?.name}{" "}
-                        {dropdown ? <UpOutlined /> : <DownOutlined />}
-                      </a>
-                      {dropdown && (
-                        <ul className="p-2 mb-4 mt-1 text-sm bg-primary rounded-lg">
-                          {item?.children?.map((dropdownItem) => (
-                            <li className="mb-4 last:mb-0">
-                              <Link
-                                to={dropdownItem?.path}
-                                className="block rounded-md px-4 py-2 text-white border hover:border-none text-center font-semibold hover:bg-hover capitalize hover:text-white"
-                              >
-                                {dropdownItem?.name}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
+                        {item?.name}
+                      </NavLink>
                     </li>
                   );
                 })}
@@ -144,44 +131,20 @@ const Navbar = () => {
           >
             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               {links?.map((item) => {
-                if (!item?.children) {
-                  return (
-                    <li key={item.name}>
-                      <NavLink
-                        to={item?.path}
-                        className="py-2 px-3 text-white rounded hover:bg-hover capitalize"
-                      >
-                        {item?.name}
-                      </NavLink>
-                    </li>
-                  );
+                if (item?.NotAllow && item?.NotAllow === role) {
+                  return;
+                }
+                if (item?.userRequired && !token) {
+                  return;
                 }
                 return (
-                  <li className="relative" key={item.name}>
-                    <a
-                      onClick={() => setDropdown(!dropdown)}
-                      className="py-2 px-3 text-white rounded cursor-pointer hover:bg-hover capitalize"
+                  <li key={item.name}>
+                    <NavLink
+                      to={item?.path}
+                      className="py-2 px-3 text-white rounded hover:bg-hover capitalize"
                     >
-                      {item?.name}{" "}
-                      {dropdown ? <UpOutlined /> : <DownOutlined />}
-                    </a>
-                    {dropdown && (
-                      <ul
-                        className="p-2 text-sm absolute bg-white border-2 rounded-lg top-14"
-                        aria-labelledby="dropdownDefaultButton"
-                      >
-                        {item?.children?.map((dropdownItem) => (
-                          <li>
-                            <Link
-                              to={dropdownItem?.path}
-                              className="block rounded-md px-4 py-2 hover:bg-hover capitalize hover:text-white"
-                            >
-                              {dropdownItem?.name}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
+                      {item?.name}
+                    </NavLink>
                   </li>
                 );
               })}

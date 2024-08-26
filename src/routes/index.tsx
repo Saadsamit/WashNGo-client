@@ -7,6 +7,8 @@ import Services from "./../Pages/Services";
 import Booking from "@/Pages/Booking";
 import ServiceDetail from "@/Pages/ServiceDetail";
 import ErrorPage from "@/Pages/ErrorPage";
+import PrivateRoute from "./PrivateRoute";
+import Dashboard from "@/Pages/Dashboard";
 
 const routes = createBrowserRouter([
   {
@@ -28,7 +30,11 @@ const routes = createBrowserRouter([
       },
       {
         path: "/booking",
-        element: <Booking />,
+        element: (
+          <PrivateRoute>
+            <Booking />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/login",
@@ -39,6 +45,10 @@ const routes = createBrowserRouter([
         element: <SignIn />,
       },
     ],
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
   },
 ]);
 
