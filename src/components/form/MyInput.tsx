@@ -7,9 +7,17 @@ type TMyInput = {
   required?: boolean;
   className?: string;
   label?: string;
+  placeholder?: string;
 };
 
-const MyInput = ({ type, name, required, className = "", label }: TMyInput) => {
+const MyInput = ({
+  type,
+  name,
+  required,
+  className = "",
+  label,
+  placeholder,
+}: TMyInput) => {
   return (
     <Controller
       name={name}
@@ -25,6 +33,7 @@ const MyInput = ({ type, name, required, className = "", label }: TMyInput) => {
               {...field}
               type={type}
               id={name}
+              placeholder={placeholder}
               required={required}
               className={`border-primary focus:border-primary  hover:border-primary focus:outline-hover ${className}`}
             />

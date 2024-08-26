@@ -6,11 +6,13 @@ import { createBrowserRouter } from "react-router-dom";
 import Services from "./../Pages/Services";
 import Booking from "@/Pages/Booking";
 import ServiceDetail from "@/Pages/ServiceDetail";
+import ErrorPage from "@/Pages/ErrorPage";
 
 const routes = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,

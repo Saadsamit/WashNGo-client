@@ -6,9 +6,19 @@ const authApi = baseApi.injectEndpoints({
       query: (req) => {
         const limit = req?.limit;
         let query = {};
+        const sort = req?.sort;
+        const search = req?.search;
+
         if (limit) {
           query = { ...query, limit };
         }
+        if (sort) {
+          query = { ...query, sort };
+        }
+        if (search) {
+          query = { ...query, search };
+        }
+        
         return {
           url: "/services",
           params: query,
