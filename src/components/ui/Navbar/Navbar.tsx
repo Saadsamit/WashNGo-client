@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import logo from "@/assets/WashNGo-logo-white.png";
 import { Button, Drawer } from "antd";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
@@ -13,6 +13,7 @@ const Navbar = () => {
   const [dropdown, setDropdown] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const location = useLocation();
   const showDrawer = () => {
     setOpen(true);
   };
@@ -36,7 +37,7 @@ const Navbar = () => {
   ];
   return (
     <header id="navbar">
-      <nav className="bg-primary dark:bg-gray-900 w-full z-20 start-0 border-b border-gray-200 dark:border-gray-600">
+      <nav className="bg-primary -mb-px dark:bg-gray-900 w-full z-20 start-0 border-b border-gray-200 dark:border-gray-600">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link
             to={"/"}
@@ -46,8 +47,16 @@ const Navbar = () => {
             <span className="text-white font-bold text-center">WashNGo</span>
           </Link>
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            <Button size="large" type="primary">
-              <Link to={"/login"}>Login</Link>
+            <Button size="large" type="primary" className="capitalize">
+            {location.pathname === "/login" ? (
+                <Link to={"/signin"}>
+                sign in
+              </Link>
+              ) : (
+                <Link to={"/login"}>
+                  log in
+                </Link>
+              )}
             </Button>
             <Button
               type="primary"

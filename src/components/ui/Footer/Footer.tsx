@@ -12,7 +12,7 @@ import { FaLinkedinIn } from "react-icons/fa6";
 
 const Footer = () => {
   return (
-    <footer className="bg-hover">
+    <footer className="bg-primary">
       <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8 px-8">
         <Row className="items-center md:justify-end justify-center">
           <Col md={12} span={24} className="text-white justify-center">
