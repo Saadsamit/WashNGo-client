@@ -2,14 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-.ant-btn{
-    @apply bg-primary text-white font-semibold hover:!text-white hover:!bg-hover border-none
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
 }
 
-.ant-btn-primary{
-    @apply bg-white text-primary font-semibold hover:!bg-hover
+.ant-btn {
+  @apply bg-primary text-white font-semibold hover:!text-white hover:!bg-hover border-none;
 }
 
-#navbar .active{
-    @apply bg-hover
+.ant-btn-default:disabled{
+    @apply bg-primary bg-opacity-90;
+}
+
+.ant-btn-primary {
+  @apply bg-white text-primary font-semibold hover:!bg-hover;
+}
+
+.ant-spin-dot-item {
+  background-color: white !important;
+}
+
+#navbar .active {
+  @apply bg-hover;
 }

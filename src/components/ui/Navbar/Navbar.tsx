@@ -3,6 +3,11 @@ import logo from "@/assets/WashNGo-logo-white.png";
 import { Button, Drawer } from "antd";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks/ReduxHook";
+import {
+  currentToken,
+  logout,
+} from "@/redux/features/auth/authSlice";
 type TLinks = {
   path: string;
   name: string;
@@ -10,6 +15,8 @@ type TLinks = {
 };
 
 const Navbar = () => {
+  const user = useAppSelector(currentToken);
+  const dispatch = useAppDispatch();
   const [dropdown, setDropdown] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -47,17 +54,24 @@ const Navbar = () => {
             <span className="text-white font-bold text-center">WashNGo</span>
           </Link>
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            <Button size="large" type="primary" className="capitalize">
-            {location.pathname === "/login" ? (
-                <Link to={"/signin"}>
-                sign in
-              </Link>
-              ) : (
-                <Link to={"/login"}>
-                  log in
-                </Link>
-              )}
-            </Button>
+            {user ? (
+              <Button
+                size="large"
+                type="primary"
+                className="capitalize"
+                onClick={() => dispatch(logout())}
+              >
+                logout
+              </Button>
+            ) : (
+              <Button size="large" type="primary" className="capitalize">
+                {location.pathname === "/login" ? (
+                  <Link to={"/signin"}>sign in</Link>
+                ) : (
+                  <Link to={"/login"}>log in</Link>
+                )}
+              </Button>
+            )}
             <Button
               type="primary"
               size="large"
@@ -73,9 +87,9 @@ const Navbar = () => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M1 1h15M1 7h15M1 13h15"
                 />
               </svg>
@@ -85,7 +99,7 @@ const Navbar = () => {
                 {links?.map((item) => {
                   if (!item?.children) {
                     return (
-                      <li className="mb-4">
+                      <li className="mb-4" key={item.name}>
                         <NavLink
                           to={item?.path}
                           className="py-2 px-3 border block text-center font-semibold rounded hover:text-white hover:bg-hover capitalize"
@@ -96,7 +110,7 @@ const Navbar = () => {
                     );
                   }
                   return (
-                    <li className="mb-4">
+                    <li className="mb-4" key={item.name}>
                       <a
                         onClick={() => setDropdown(!dropdown)}
                         className="py-2 px-3 border block text-center font-semibold rounded cursor-pointer hover:text-white hover:bg-hover capitalize"
@@ -132,7 +146,7 @@ const Navbar = () => {
               {links?.map((item) => {
                 if (!item?.children) {
                   return (
-                    <li>
+                    <li key={item.name}>
                       <NavLink
                         to={item?.path}
                         className="py-2 px-3 text-white rounded hover:bg-hover capitalize"
@@ -143,7 +157,7 @@ const Navbar = () => {
                   );
                 }
                 return (
-                  <li className="relative">
+                  <li className="relative" key={item.name}>
                     <a
                       onClick={() => setDropdown(!dropdown)}
                       className="py-2 px-3 text-white rounded cursor-pointer hover:bg-hover capitalize"

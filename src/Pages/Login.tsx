@@ -1,42 +1,48 @@
 import MyForm from "@/components/form/MyForm";
-import { Button, Flex } from "antd";
+import { Button, Flex, Spin } from "antd";
 import MyInput from "./../components/form/MyInput";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import Container from "@/components/Container/Container";
 import Title from "antd/es/typography/Title";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLoginMutation } from "@/redux/features/auth/authApi";
 import { useAppDispatch } from "@/redux/hooks/ReduxHook";
 import { setUser } from "@/redux/features/auth/authSlice";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
 const Login = () => {
-    const dispatch = useAppDispatch()
-  const obj = {
-    email: "web@programming-hero.com",
-    password: "ph-password",
-  };
+  const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [login] = useLoginMutation();
   const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const userData = await login(data).unwrap();
-    if(userData?.success){
-        dispatch(setUser(userData))
+    try {
+      setLoading(true);
+      const userData = await login(data).unwrap();
+      if (userData?.success) {
+        dispatch(setUser(userData));
+        toast.success(userData?.message);
+        navigate("/");
+      }
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
     }
-    console.log(userData);
   };
   const loginScheme = z.object({
     email: z.string({ required_error: "email is required" }).email(),
-    password: z.string({ required_error: "email is password" }).min(6),
+    password: z.string({ required_error: "password is required" }).min(6),
   });
   return (
     <Container>
-      <Flex justify="center" align="center" className="h-[calc(100vh-87px)]">
+      <Flex justify="center" align="center" className="my-10">
         <MyForm
           className="border shadow-md p-4 rounded-xl w-96"
           onSubmit={handleSubmit}
           resolver={zodResolver(loginScheme)}
-          defaultValues={obj}
         >
           <div>
             <Title
@@ -48,8 +54,17 @@ const Login = () => {
           </div>
           <MyInput name="email" type="email" label="email" className="w-full" />
           <MyInput name="password" type="password" label="password" />
-          <Button htmlType="submit" size="large" className="block w-full">
-            Login
+          <Button
+            htmlType="submit"
+            size="large"
+            className="block w-full"
+            disabled={loading}
+          >
+            {loading ? (
+              <Spin tip="Loading" size="small" className=""></Spin>
+            ) : (
+              "Login"
+            )}
           </Button>
           <p className="text-center mt-4">
             {"If You Don't Have Account"}{" "}
