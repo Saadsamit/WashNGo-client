@@ -9,6 +9,14 @@ import ServiceDetail from "@/Pages/ServiceDetail";
 import ErrorPage from "@/Pages/ErrorPage";
 import PrivateRoute from "./PrivateRoute";
 import Dashboard from "@/Pages/Dashboard";
+import PrivateRouteWithRole from "./PrivateRouteWithRole";
+import RecentBookings from "@/Pages/admin/RecentBookings";
+import ServiceManagement from "@/Pages/admin/ServiceManagement";
+import SlotManagement from "@/Pages/admin/SlotManagement";
+import UserManagement from "@/Pages/admin/UserManagement";
+import UpcomingBooking from "@/Pages/user/UpcomingBooking";
+import MyAccount from "@/Pages/MyAccount";
+import PastBooking from "@/Pages/user/PastBooking";
 
 const routes = createBrowserRouter([
   {
@@ -48,7 +56,62 @@ const routes = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: (
+          <PrivateRouteWithRole
+            admin={<RecentBookings />}
+            user={<UpcomingBooking />}
+          />
+        ),
+      },
+      {
+        path: "serviceManagement",
+        element: (
+          <PrivateRoute>
+            <ServiceManagement />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "myAccount",
+        element: (
+          <PrivateRoute>
+            <MyAccount />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "slotManagement",
+        element: (
+          <PrivateRoute>
+            <SlotManagement />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "userManagement",
+        element: (
+          <PrivateRoute>
+            <UserManagement />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "pastBooking",
+        element: (
+          <PrivateRoute>
+            <PastBooking />
+          </PrivateRoute>
+        ),
+      },
+    ],
   },
 ]);
 

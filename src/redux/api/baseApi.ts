@@ -29,10 +29,10 @@ const handleErrorWithBaseQuery: BaseQueryFn<
   DefinitionType
 > = async (args, api, extraOptions): Promise<any> => {
   const result: any = await baseQuery(args, api, extraOptions);
-  const status = [400, 402, 403, 404,500];
+  const status = [400, 402, 403, 404, 500];
 
   if (result?.error?.status === 401) {
-    api.dispatch(logout);
+    api.dispatch(logout());
     toast.error(result?.error?.data?.message);
   }
 
@@ -46,7 +46,7 @@ const handleErrorWithBaseQuery: BaseQueryFn<
 const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: handleErrorWithBaseQuery,
-  tagTypes: ["service"],
+  tagTypes: ["service", "auth"],
   endpoints: () => ({}),
 });
 

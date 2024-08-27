@@ -16,7 +16,22 @@ const authApi = baseApi.injectEndpoints({
         body: user,
       }),
     }),
+    myAccount: builder.query({
+      query: () => ({
+        url: "/auth/myAccount",
+      }),
+      providesTags: ["auth"],
+    }),
+    updateAccount: builder.mutation({
+      query: (data) => ({
+        url: "/auth/updateAccount",
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["auth"],
+    }),
   }),
 });
 
-export const { useLoginMutation, useSingInMutation } = authApi;
+export const { useLoginMutation, useSingInMutation, useMyAccountQuery,useUpdateAccountMutation } =
+  authApi;
