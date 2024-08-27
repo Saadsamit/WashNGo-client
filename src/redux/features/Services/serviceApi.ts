@@ -18,13 +18,28 @@ const authApi = baseApi.injectEndpoints({
         if (search) {
           query = { ...query, search };
         }
-        
+
         return {
           url: "/services",
           params: query,
         };
       },
       providesTags: ["service"],
+    }),
+    updateService: builder.mutation({
+      query: (data) => ({
+        url: `/services/${data?.id}`,
+        method: "PUT",
+        body: data?.data,
+      }),
+      invalidatesTags: ["service"],
+    }),
+    deleteService: builder.mutation({
+      query: (id) => ({
+        url: `/services/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["service"],
     }),
     createService: builder.mutation({
       query: (data) => ({
@@ -37,4 +52,9 @@ const authApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useCreateServiceMutation, useGetAllServicesQuery } = authApi;
+export const {
+  useCreateServiceMutation,
+  useGetAllServicesQuery,
+  useUpdateServiceMutation,
+  useDeleteServiceMutation,
+} = authApi;

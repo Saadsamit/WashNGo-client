@@ -22,9 +22,6 @@ input[type=number]::-webkit-outer-spin-button {
 .ant-select-selection-placeholder{
   @apply !text-primary
 }
-.ant-menu-item {
-  
-}
 
 .ant-spin-dot-item {
   background-color: white !important;

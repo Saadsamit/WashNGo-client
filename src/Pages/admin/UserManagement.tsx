@@ -17,7 +17,7 @@ interface DataType {
   action: { id: string; role: string };
 }
 
-const userTable = (onChange: any) => {
+const userTable = (onChange: (role: string, id: string) => Promise<void>) => {
   const userRole = [
     {
       value: "admin",

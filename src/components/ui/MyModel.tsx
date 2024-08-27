@@ -12,6 +12,7 @@ type TMyModel = {
 const MyModel = ({ modal, setModal, children, title }: TMyModel) => {
   return (
     <Modal
+      forceRender={false}
       title={
         <Title level={3} className="text-center capitalize">
           {title}
