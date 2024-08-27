@@ -46,7 +46,7 @@ const handleErrorWithBaseQuery: BaseQueryFn<
 const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: handleErrorWithBaseQuery,
-  tagTypes: ["service", "auth"],
+  tagTypes: ["service", "account", "auth"],
   endpoints: () => ({}),
 });
 

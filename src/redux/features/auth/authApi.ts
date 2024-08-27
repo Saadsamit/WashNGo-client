@@ -20,6 +20,12 @@ const authApi = baseApi.injectEndpoints({
       query: () => ({
         url: "/auth/myAccount",
       }),
+      providesTags: ["account"],
+    }),
+    allUser: builder.query({
+      query: () => ({
+        url: "/auth/allUser",
+      }),
       providesTags: ["auth"],
     }),
     updateAccount: builder.mutation({
@@ -28,10 +34,24 @@ const authApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
+      invalidatesTags: ["account"],
+    }),
+    roleUpdate: builder.mutation({
+      query: (data) => ({
+        url: `/auth/roleUpdate/${data?.id}`,
+        method: "PUT",
+        body: { role: data.role },
+      }),
       invalidatesTags: ["auth"],
     }),
   }),
 });
 
-export const { useLoginMutation, useSingInMutation, useMyAccountQuery,useUpdateAccountMutation } =
-  authApi;
+export const {
+  useLoginMutation,
+  useSingInMutation,
+  useMyAccountQuery,
+  useUpdateAccountMutation,
+  useAllUserQuery,
+  useRoleUpdateMutation,
+} = authApi;

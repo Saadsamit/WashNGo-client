@@ -4,3 +4,11 @@ export type TUser = {
   iat: number;
   role: string;
 };
+export type TAllUserData = {
+  _id: string;
+  name: string;
+  email: string;
+  phone: number;
+  role: string;
+  address: string;
+};

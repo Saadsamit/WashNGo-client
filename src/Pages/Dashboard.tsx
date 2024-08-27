@@ -147,7 +147,7 @@ const Dashboard = () => {
       <DashboardNav toggleCollapsed={toggleCollapsed} collapsed={collapsed} />
       <Flex>
         <div>
-          <div className="sm:w-64 fixed top-20 bottom-0">
+          <div className="sm:w-64 fixed bg-primary top-20 bottom-0">
             <Menu
               className="bg-primary min-h-[calc(100vh-84px)]"
               defaultSelectedKeys={[location?.pathname]}
