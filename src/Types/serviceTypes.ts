@@ -16,3 +16,22 @@ export type TSlot = {
   endTime: string;
   isBooked: string;
 };
+export type TCustomer = {
+  _id: string;
+  name: string;
+  email: string;
+  phone: number;
+  role: string;
+  address: string;
+};
+export type TBooking = {
+  _id: string;
+  service: TService;
+  customer: TCustomer;
+  slot: TSlot;
+  vehicleType: string;
+  vehicleBrand: string;
+  vehicleModel: string;
+  manufacturingYear: number;
+  registrationPlate: string;
+};

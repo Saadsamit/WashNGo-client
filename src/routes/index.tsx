@@ -29,15 +29,15 @@ const routes = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/service",
+        path: "service",
         element: <Services />,
       },
       {
-        path: "/service/:id",
+        path: "service/:id",
         element: <ServiceDetail />,
       },
       {
-        path: "/booking",
+        path: "booking",
         element: (
           <PrivateRoute>
             <Booking />
@@ -45,11 +45,11 @@ const routes = createBrowserRouter([
         ),
       },
       {
-        path: "/login",
+        path: "login",
         element: <Login />,
       },
       {
-        path: "/signin",
+        path: "signin",
         element: <SignIn />,
       },
     ],
