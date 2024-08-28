@@ -8,6 +8,8 @@ type TMyInput = {
   className?: string;
   label?: string;
   placeholder?: string;
+  defaultValue?: any;
+  disabled?: boolean;
 };
 
 const MyInput = ({
@@ -17,10 +19,13 @@ const MyInput = ({
   className = "",
   label,
   placeholder,
+  defaultValue,
+  disabled,
 }: TMyInput) => {
   return (
     <Controller
       name={name}
+      defaultValue={defaultValue}
       render={({ field, fieldState: { error } }) => (
         <>
           {label && (
@@ -34,6 +39,7 @@ const MyInput = ({
               type={type}
               id={name}
               placeholder={placeholder}
+              disabled={disabled}
               required={required}
               className={`border-primary focus:border-primary  hover:border-primary focus:outline-hover ${className}`}
             />

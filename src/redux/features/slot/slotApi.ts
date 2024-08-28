@@ -8,6 +8,12 @@ const slotApi = baseApi.injectEndpoints({
       }),
       providesTags: ["slot"],
     }),
+    getASlot: builder.query({
+      query: (id) => ({
+        url: `/slots/${id}`,
+      }),
+      providesTags: ["slot"],
+    }),
     updateSlotStatus: builder.mutation({
       query: (data) => ({
         url: `/slots/updateSlotStatus/${data?.id}`,
@@ -31,4 +37,5 @@ export const {
   useCreateSlotMutation,
   useUpdateSlotStatusMutation,
   useGetSlotQuery,
+  useGetASlotQuery
 } = slotApi;

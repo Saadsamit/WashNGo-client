@@ -65,7 +65,6 @@ const RecentBookings = () => {
     setBooking(item);
     setModal(true);
   };
-  console.log(booking);
   const tableData: DataType[] = data?.data?.map((item: TBooking) => ({
     key: item?._id,
     service: item?.service?.name,

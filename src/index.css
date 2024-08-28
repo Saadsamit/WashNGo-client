@@ -29,6 +29,9 @@ input[type=number]::-webkit-outer-spin-button {
 .ant-menu-item-selected{
   @apply !bg-hover;
 }
+.ant-input-disabled{
+  @apply !text-black
+}
 .ant-menu-item-only-child{
   @apply hover:!bg-hover;
 }
