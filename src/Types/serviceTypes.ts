@@ -7,6 +7,12 @@ export type TService = {
   duration: number;
   isDeleted: boolean;
   __v: number;
-  createdAt: string;
-  updatedAt: string;
+};
+export type TSlot = {
+  _id: string;
+  service: TService;
+  date: string;
+  startTime: string;
+  endTime: string;
+  isBooked: string;
 };
