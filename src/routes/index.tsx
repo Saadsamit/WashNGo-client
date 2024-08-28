@@ -39,9 +39,9 @@ const routes = createBrowserRouter([
       {
         path: "booking",
         element: (
-          <PrivateRoute>
-            <Booking />
-          </PrivateRoute>
+          <PrivateRouteWithRole
+            user={<Booking />}
+          />
         ),
       },
       {
@@ -61,6 +61,7 @@ const routes = createBrowserRouter([
         <Dashboard />
       </PrivateRoute>
     ),
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,

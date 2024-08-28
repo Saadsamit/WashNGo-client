@@ -6,8 +6,8 @@ import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 
 type TPrivateRouteWithRole = {
-  admin: ReactNode;
-  user: ReactNode;
+  admin?: ReactNode;
+  user?: ReactNode;
 };
 
 const PrivateRouteWithRole = ({ admin, user }: TPrivateRouteWithRole) => {
@@ -17,8 +17,14 @@ const PrivateRouteWithRole = ({ admin, user }: TPrivateRouteWithRole) => {
   if (token) {
     const data: TUser = jwtDecode(token);
     if (data?.role === "admin") {
+      if (!admin) {
+        return <Navigate to="/" replace></Navigate>;
+      }
       return admin;
     } else if (data?.role === "user") {
+      if (!user) {
+        return <Navigate to="/" replace></Navigate>;
+      }
       return user;
     } else {
       dispatch(logout());

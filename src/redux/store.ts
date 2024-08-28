@@ -12,6 +12,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import slotSlice from "./features/slot/slotSlice";
 
 const persistConfig = {
   key: "root",
@@ -24,6 +25,7 @@ const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: authPersistedReducer,
+    slot: slotSlice
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

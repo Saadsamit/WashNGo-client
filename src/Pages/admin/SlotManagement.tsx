@@ -1,4 +1,12 @@
-import { Button, DatePicker, Select, Skeleton, Table, TimePicker } from "antd";
+import {
+  Button,
+  DatePicker,
+  Select,
+  Skeleton,
+  Spin,
+  Table,
+  TimePicker,
+} from "antd";
 import type { TableProps } from "antd";
 import Title from "antd/es/typography/Title";
 import { TService, TSlot } from "@/Types";
@@ -11,6 +19,7 @@ import {
 } from "@/redux/features/slot/slotApi";
 import { ReactNode, useState } from "react";
 import MyModel from "@/components/ui/MyModel";
+import moment from "moment";
 
 type TCombined = {
   children?: TSlot[];
@@ -86,6 +95,7 @@ const slotStatus = [
 ];
 const SlotManagement = () => {
   const [modal, setModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [serviceId, setServiceId] = useState("");
   const [date, setDate] = useState<string | string[] | null>(null);
   const [startTime, setStartTime] = useState<string | string[] | null>(null);
@@ -114,6 +124,7 @@ const SlotManagement = () => {
   };
 
   const handleSubmit = async (e: any) => {
+    setLoading(true)
     e.preventDefault();
     const result = await createSlot({
       date,
@@ -122,9 +133,11 @@ const SlotManagement = () => {
       service: serviceId,
     }).unwrap();
     if (result?.success) {
+      setLoading(false)
       toast.success(result?.message);
-      setModal(false); 
+      setModal(false);
     }
+    setLoading(false)
   };
 
   const combined: TCombined[] = serviceData?.data?.map((service: TService) => ({
@@ -148,7 +161,9 @@ const SlotManagement = () => {
     children: item?.children?.length
       ? item?.children?.map((slotItem: TSlot) => ({
           key: slotItem?._id,
-          image: <Title level={5}>Date: {slotItem?.date}</Title>,
+          image: (
+            <Title level={5}>Date: {moment(slotItem?.date).format("L")}</Title>
+          ),
           name: `Start Time: ${slotItem?.startTime}`,
           price: slotItem?.endTime,
           action: (
@@ -180,7 +195,7 @@ const SlotManagement = () => {
             <DatePicker
               size="large"
               id="date"
-              onChange={(_d, dateString) => setDate(dateString)}
+              onChange={(d) => setDate(d.toISOString())}
               required={true}
               className="w-full border-primary focus:border-primary  hover:border-primary focus:outline-hover"
             />
@@ -223,7 +238,11 @@ const SlotManagement = () => {
           </div>
 
           <Button className="w-full" htmlType="submit">
-            Add Slot
+            {loading ? (
+              <Spin tip="Loading" size="small" className=""></Spin>
+            ) : (
+              "Add Slot"
+            )}
           </Button>
         </form>
       </MyModel>

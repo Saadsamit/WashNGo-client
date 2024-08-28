@@ -6,6 +6,7 @@ import { TBooking } from "@/Types";
 import { useGetAllBookingsQuery } from "@/redux/features/Booking/bookingApi";
 import MyModel from "@/components/ui/MyModel";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 interface DataType {
   key: string;
@@ -88,7 +89,9 @@ const RecentBookings = () => {
       >
         <div className="">
           <Title level={4}>Customer: {booking?.customer?.name}</Title>
-          <Title level={5}>Date: {booking?.slot?.date}</Title>
+          <Title level={5}>
+            Date: {moment(booking?.slot?.date).format("L")}
+          </Title>
           <Title level={5}>Phone: {booking?.customer?.phone}</Title>
           <Title level={5}>Price: ${booking?.service?.price}</Title>
           <Title level={5}>
@@ -97,7 +100,7 @@ const RecentBookings = () => {
           <Title level={5}>
             Address: <address>{booking?.customer?.address}</address>
           </Title>
-          <Link to={`/service/:id${booking?.service?._id}`}>
+          <Link to={`/service/${booking?.service?._id}`}>
             <Button className="w-full">View Service</Button>
           </Link>
         </div>
