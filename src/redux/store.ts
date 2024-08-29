@@ -13,6 +13,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import slotSlice from "./features/slot/slotSlice";
+import compareSlice from "./features/Compare/compareSlice";
 
 const persistConfig = {
   key: "root",
@@ -25,7 +26,8 @@ const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: authPersistedReducer,
-    slot: slotSlice
+    slot: slotSlice,
+    compareService: compareSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

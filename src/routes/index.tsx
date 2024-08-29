@@ -17,6 +17,7 @@ import UserManagement from "@/Pages/admin/UserManagement";
 import UpcomingBooking from "@/Pages/user/UpcomingBooking";
 import MyAccount from "@/Pages/MyAccount";
 import PastBooking from "@/Pages/user/PastBooking";
+import Compare from "@/Pages/Compare";
 
 const routes = createBrowserRouter([
   {
@@ -37,12 +38,12 @@ const routes = createBrowserRouter([
         element: <ServiceDetail />,
       },
       {
+        path: "compare",
+        element: <Compare />,
+      },
+      {
         path: "booking",
-        element: (
-          <PrivateRouteWithRole
-            user={<Booking />}
-          />
-        ),
+        element: <PrivateRouteWithRole user={<Booking />} />,
       },
       {
         path: "login",

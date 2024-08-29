@@ -77,7 +77,7 @@ const Services = () => {
             />
           </Flex>
         </Flex>
-        <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-6">
+        <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-6">
           {data?.data?.map((item: TService) => (
             <ServiceCard data={item} key={item._id}/>
           ))}

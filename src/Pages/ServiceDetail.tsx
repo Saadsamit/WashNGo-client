@@ -3,6 +3,10 @@ import MyBanner from "@/components/ui/MyBanner";
 import MyModel from "@/components/ui/MyModel";
 import { currentToken } from "@/redux/features/auth/authSlice";
 import {
+  addCompareServie,
+  compareService,
+} from "@/redux/features/Compare/compareSlice";
+import {
   useGetAServicesQuery,
   useGetServiceSlotsQuery,
 } from "@/redux/features/Services/serviceApi";
@@ -21,6 +25,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const ServiceDetail = () => {
   const [modal, setModal] = useState(false);
   const dispatch = useAppDispatch();
+  const compareServiceData = useAppSelector(compareService);
   const [date, setDate] = useState(moment(new Date(Date.now())).toISOString());
   const { id } = useParams();
   const { data, isLoading } = useGetAServicesQuery(id);
@@ -54,13 +59,21 @@ const ServiceDetail = () => {
   if (isLoading) {
     return <Skeleton />;
   }
-  //   const handleCompare = () => {
-  //     if (!token) {
-  //       navigate("/login");
-  //       return;
-  //     }
-  //     console.log(token);
-  //   };
+  const handleCompare = () => {
+    if (compareServiceData.item1?._id === id) {
+      navigate("/service");
+      return;
+    }
+    if (compareServiceData.item1?._id) {
+      if (compareServiceData.item1?._id !== id) {
+        dispatch(addCompareServie(data));
+        navigate("/compare");
+        return;
+      }
+    }
+    dispatch(addCompareServie(data));
+    navigate("/service");
+  };
   const handleSlots = (id: string) => {
     if (user?.role === "admin") {
       toast.error("this is only for user");
@@ -85,9 +98,11 @@ const ServiceDetail = () => {
           </div>
           <div className="md:w-1/3 sm:w-2/3">
             <div>
-              {/* <Button className="w-full mb-4" onClick={handleCompare}>
-                Compare
-              </Button> */}
+              <Button className="w-full mb-4" onClick={handleCompare}>
+                {compareServiceData.item1?._id === id
+                  ? "Compare with"
+                  : "Compare"}
+              </Button>
               <Button className="w-full" onClick={handleSlot}>
                 Select A Slot
               </Button>
