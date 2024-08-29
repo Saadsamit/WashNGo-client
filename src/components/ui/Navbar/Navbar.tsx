@@ -5,6 +5,10 @@ import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks/ReduxHook";
 import { currentToken, logout } from "@/redux/features/auth/authSlice";
 import { jwtDecode } from "jwt-decode";
+import { useGetMyBookingQuery } from "@/redux/features/Booking/bookingApi";
+import CountDownTime from "@/components/CountDownTime";
+import Title from "antd/es/typography/Title";
+import Container from "@/components/Container/Container";
 export type TLinks = {
   path: string;
   name: string;
@@ -19,8 +23,15 @@ const Navbar = () => {
     user = jwtDecode(token);
   }
   const role = user?.role;
+  const { data, isLoading } = useGetMyBookingQuery(
+    {
+      mode: "nav",
+    },
+    { skip: role !== "user" || !role }
+  );
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
+  const [isComplete, setComplete] = useState(false);
 
   const location = useLocation();
   const showDrawer = () => {
@@ -52,6 +63,25 @@ const Navbar = () => {
   ];
   return (
     <header id="navbar">
+      {!isComplete && (
+        <nav className="bg-hover">
+          {!isLoading && data && (
+            <Container className="pb-0 pt-1">
+              <div className="flex text-white justify-between">
+                <Title level={5} className="!font-bold !text-white !mr-2">
+                  Upcoming Slot:{" "}
+                </Title>
+                <CountDownTime
+                  date={data?.data?.slot?.date}
+                  startTime={data?.data?.slot?.startTime}
+                  setComplete={setComplete}
+                />
+              </div>
+            </Container>
+          )}
+        </nav>
+      )}
+
       <nav className="bg-primary -mb-px dark:bg-gray-900 w-full z-20 start-0 border-b border-gray-200 dark:border-gray-600">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link
@@ -112,7 +142,11 @@ const Navbar = () => {
                     return;
                   }
                   return (
-                    <li className="mb-4" key={item.name}>
+                    <li
+                      className="mb-4"
+                      key={item.name}
+                      onClick={() => setOpen(false)}
+                    >
                       <NavLink
                         to={item?.path}
                         className="py-2 px-3 border block text-center font-semibold rounded hover:text-white hover:bg-hover capitalize"

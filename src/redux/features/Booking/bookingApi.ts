@@ -9,9 +9,16 @@ const bookingApi = baseApi.injectEndpoints({
       providesTags: ["booking"],
     }),
     getMyBooking: builder.query({
-      query: () => ({
-        url: "/my-bookings",
-      }),
+      query: ({ mode }) => {
+        let query = {};
+        if (mode) {
+          query = { mode };
+        }
+        return {
+          url: "/my-bookings",
+          params: query,
+        };
+      },
       providesTags: ["booking"],
     }),
     createBooking: builder.mutation({

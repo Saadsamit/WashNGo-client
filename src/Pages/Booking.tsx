@@ -93,6 +93,7 @@ const Booking = () => {
     const BookingData = {
       serviceId: slotData?.data?.service?._id,
       slotId: slotData?.data?._id,
+      bookingDate: slotData?.data?.date,
       vehicleType,
       vehicleBrand: data?.vehicleBrand,
       vehicleModel: data?.vehicleModel,
@@ -199,17 +200,10 @@ const Booking = () => {
                 >
                   vehicle Types
                 </label>
-                <label
-                  htmlFor={"vehicleTypes"}
-                  className="mb-2 capitalize font-semibold"
-                >
-                  vehicleTypes :
-                </label>
                 <div className="mb-1">
                   <Select
                     id="vehicleTypes"
                     className="placeholder:!text-primary mb-2 !border-primary focus:!border-primary hover:!border-primary focus:!outline-hover w-full"
-                    placeholder={"Vehicle Type"}
                     onChange={handleChange}
                     options={vehicleTypes}
                   />
