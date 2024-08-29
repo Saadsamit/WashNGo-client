@@ -35,3 +35,9 @@ export type TBooking = {
   manufacturingYear: number;
   registrationPlate: string;
 };
+export type TReview = {
+  _id: string;
+  user: TCustomer;
+  feedback: string;
+  rating: number;
+};

@@ -18,6 +18,7 @@ import UpcomingBooking from "@/Pages/user/UpcomingBooking";
 import MyAccount from "@/Pages/MyAccount";
 import PastBooking from "@/Pages/user/PastBooking";
 import Compare from "@/Pages/Compare";
+import Reviews from "@/Pages/Reviews";
 
 const routes = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const routes = createBrowserRouter([
       {
         path: "compare",
         element: <Compare />,
+      },
+      {
+        path: "reviews",
+        element: <Reviews />,
       },
       {
         path: "booking",
