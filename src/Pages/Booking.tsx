@@ -13,7 +13,6 @@ import Title from "antd/es/typography/Title";
 import moment from "moment";
 import { useState } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
-import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 
@@ -104,7 +103,8 @@ const Booking = () => {
       setLoading(true);
       const result = await createBooking(BookingData).unwrap();
       if (result?.success) {
-        toast.success(result?.message);
+        setLoading(false);
+        window.location.href = result?.data?.payment_url
       }
       setLoading(false);
     } catch (err) {
@@ -143,7 +143,7 @@ const Booking = () => {
                   </div>
                   <div className="flex flex-wrap justify-between items-center">
                     <Title level={5} className="!m-0 !my-2">
-                      Price: ${slotData?.data?.service?.price}
+                      Price: BDT {slotData?.data?.service?.price * 100}
                     </Title>
                     <Title level={5} className="!m-0 !my-2">
                       duration: {slotData?.data?.service?.duration}min
