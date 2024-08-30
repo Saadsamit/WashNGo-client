@@ -104,7 +104,7 @@ const Booking = () => {
       const result = await createBooking(BookingData).unwrap();
       if (result?.success) {
         setLoading(false);
-        window.location.href = result?.data?.payment_url
+        window.location.href = result?.data?.payment_url;
       }
       setLoading(false);
     } catch (err) {
@@ -172,12 +172,6 @@ const Booking = () => {
               </Title>
               <MyForm
                 onSubmit={handleSubmit}
-                defaultValues={{
-                  vehicleBrand: "Toyota",
-                  vehicleModel: "Camry",
-                  manufacturingYear: "2020",
-                  registrationPlate: "ABC123",
-                }}
                 resolver={zodResolver(dataResolver)}
               >
                 <MyInput

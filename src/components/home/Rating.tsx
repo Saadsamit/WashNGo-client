@@ -1,5 +1,5 @@
-import Title from "antd/es/typography/Title";
 import Container from "../Container/Container";
+import image from "@/assets/review.png";
 import { useAppSelector } from "@/redux/hooks/ReduxHook";
 import { currentToken } from "@/redux/features/auth/authSlice";
 import { jwtDecode } from "jwt-decode";
@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import ReviewCard from "./ReviewCard";
 import { TReview } from "@/Types";
+import { FaXmark } from "react-icons/fa6";
 
 const Rating = () => {
   const [modal, setModal] = useState(false);
@@ -29,7 +30,7 @@ const Rating = () => {
 
   const { data, isLoading } = useGetAllRatingQuery({
     email: user?.email,
-    limit: 4,
+    limit: 2,
   });
 
   if (isLoading) {
@@ -57,52 +58,54 @@ const Rating = () => {
   };
   return (
     <Container className="mb-20">
-      <Title className="capitalize text-center !text-primary !mb-10" level={2}>
-        Reviews
-      </Title>
-      <div className="text-end mb-4">
-        <Link
-          to={"/reviews"}
-          className="capitalize border-primary border rounded-md hover:bg-primary hover:text-white px-2"
-        >
-          see more
-        </Link>
-      </div>
-      <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-6">
-        {data?.data?.map((item: TReview) => (
-          <ReviewCard data={item} />
-        ))}
-      </div>
-      <div className="text-center">
-        {token ? (
-          user?.role === "user" &&
-          !data?.feedbackExsit && (
-            <Button onClick={openModal}>Give a Rating</Button>
-          )
-        ) : (
-          <Button onClick={openLoginModal}>Give a Rating</Button>
-        )}
-      </div>
-
-      <MyModel modal={modal2} setModal={setModal2} title="Need to login first">
-        <div>
-          <Link to={"/signin"}>
-            <Button className="w-full my-4" size="large" type="text">
-              Sign In
-            </Button>
-          </Link>
-          <div className="flex justify-around items-center px-4">
-            <div className="bg-primary h-[2px] w-2/5"></div>
-            <p className="text-center">or</p>
-            <div className="bg-primary h-0.5 w-2/5"></div>
+      <div className="relative sm:p-4 p-2">
+        <div className="md:flex items-center">
+          <div className="lg:w-2/3 md:w-1/2 md:block sm:hidden">
+            <img src={image} alt="" />
           </div>
-          <Link to={"/login"}>
-            <Button className="w-full my-4" size="large">
-              Login
-            </Button>
-          </Link>
+          <div className="lg:w-1/3 md:w-1/2">
+            <div className="text-end mb-4">
+              <Link
+                to={"/reviews"}
+                className="capitalize border-primary border rounded-md hover:bg-primary hover:text-white px-2"
+              >
+                see more
+              </Link>
+            </div>
+            <div className="grid gap-6">
+              {data?.data?.map((item: TReview) => (
+                <ReviewCard data={item} />
+              ))}
+            </div>
+            <div className="mt-5">
+              {token ? (
+                user?.role === "user" &&
+                !data?.feedbackExsit && (
+                  <Button onClick={openModal}>Give a Rating</Button>
+                )
+              ) : (
+                <Button onClick={openLoginModal}>Give a Rating</Button>
+              )}
+            </div>
+          </div>
         </div>
-      </MyModel>
+        <div className={`absolute inset-0 rounded-lg h-full ${modal2 || 'hidden'}`}>
+          <div className="flex justify-center items-center h-full">
+            <div className="absolute inset-0 opacity-65 bg-black rounded-lg"></div>
+            <button
+              className="absolute top-6 right-6 font-bold text-xl text-white"
+              onClick={() => setModal2(false)}
+            >
+             <FaXmark />
+            </button>
+            <Link to={"/login"}>
+              <Button className="my-4 min-w-48" size="large">
+                Login
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
       <MyModel modal={modal} setModal={setModal} title="Give a Rating">
         <form onSubmit={handleSubmit}>
           <Flex gap="middle" vertical className="!mt-3">

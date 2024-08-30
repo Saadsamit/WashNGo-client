@@ -33,7 +33,7 @@ const SignIn = () => {
     name: z.string({ required_error: "name is required" }),
     email: z.string({ required_error: "email is required" }).email(),
     password: z.string({ required_error: "password is required" }).min(6),
-    phone: z.number({ required_error: "phone is required" }).transform(Number),
+    phone: z.string({ required_error: "phone is required" }),
     address: z.string({ required_error: "address is required" }),
   });
   return (
@@ -71,7 +71,7 @@ const SignIn = () => {
             {loading ? (
               <Spin tip="Loading" size="small" className=""></Spin>
             ) : (
-              "Login"
+              "Sign In"
             )}
           </Button>
           <p className="text-center mt-4">

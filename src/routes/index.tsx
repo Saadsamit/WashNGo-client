@@ -19,6 +19,9 @@ import MyAccount from "@/Pages/MyAccount";
 import PastBooking from "@/Pages/user/PastBooking";
 import Compare from "@/Pages/Compare";
 import Reviews from "@/Pages/Reviews";
+import FailPayment from "@/Pages/FailPayment";
+import SuccessPayment from "@/Pages/SuccessPayment";
+import CancelPayment from "@/Pages/CancelPayment";
 
 const routes = createBrowserRouter([
   {
@@ -49,6 +52,18 @@ const routes = createBrowserRouter([
       {
         path: "booking",
         element: <PrivateRouteWithRole user={<Booking />} />,
+      },
+      {
+        path: "/payment/success",
+        element: <PrivateRouteWithRole user={<SuccessPayment />} />,
+      },
+      {
+        path: "/payment/fail",
+        element: <PrivateRouteWithRole user={<FailPayment />} />,
+      },
+      {
+        path: "/payment/cancel/:id",
+        element: <PrivateRouteWithRole user={<CancelPayment />} />,
       },
       {
         path: "login",

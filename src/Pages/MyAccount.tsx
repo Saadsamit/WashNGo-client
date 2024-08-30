@@ -39,7 +39,7 @@ const MyAccount = () => {
   };
   const myAccountScheme = z.object({
     name: z.string({ required_error: "name is required" }),
-    phone: z.number({ required_error: "phone is required" }),
+    phone: z.string({ required_error: "phone is required" }),
     address: z.string({ required_error: "address is required" }),
   });
   return (

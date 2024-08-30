@@ -21,6 +21,7 @@ const CountDownTime = ({
     <Countdown
       date={targetDateTime}
       renderer={({
+        days,
         hours,
         minutes,
         seconds,
@@ -34,7 +35,7 @@ const CountDownTime = ({
         } else {
           return (
             <div className={`font-bold ${className}`}>
-              {padTime(hours)}:{padTime(minutes)}:{padTime(seconds)}
+              {padTime(days)}:{padTime(hours)}:{padTime(minutes)}:{padTime(seconds)}
             </div>
           );
         }

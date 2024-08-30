@@ -1,37 +1,48 @@
 
-<div align="center">
-  <h1>Comprehensive Project README Template</h1>
-</div>
-
 ---
 
-# Project Name
+# Project Name : [WashNGo](https://washngo.vercel.app)
 
 ## Introduction
 
-Brief introduction or tagline about the project.
+An innovative online solution designed to totally change the scheduling and management of car wash services is the Car Wash Booking System. This system aims to give service providers efficient tools to handle reservations and client contacts, while also making appointment scheduling easy for clients. This system's robust backend capability and user-friendly interface provide a seamless booking and payment process.
 
 ## Project Description
 
-Detailed description of the project, including its purpose and goals.
+The Car Wash Booking System offers a comprehensive online scheduling and management solution for car wash services. It is made to satisfy the demands of both service providers and consumers in order to optimize convenience and operational effectiveness.
 
 ## Features
 
-- List of key features or functionalities.
-- Bullet points are helpful for clarity.
+- login system roles `admin` `user`,
+- admin can create, update, delete service 
+- admin can create slot and change slot status
+- user can book slot and can see his all bookings
+- user and admin can update ther profile
+- integrated payment system 
+- compare service system
+- review system
 
 ## Technology Stack
 
-- List of technologies, frameworks, and tools used in the project.
-- Example: React, Redux, Node.js, MongoDB, etc.
+- React
+- Redux
+- Redux Persist
+- Typescript
+- Ant Design
+- Tailwind
+- React Hook Form
+- React Router
+- Express
+- Node.js
+- MongoDB
+- Mongoose
 
 ## Installation Guideline
 
-Instructions on how to install, configure, and get the project running locally.
 
 ### Prerequisites
 
-- List any software or dependencies that need to be installed beforehand (if any).
+- Node (^20.14.10)
 
 ### Installation Steps
 
@@ -44,12 +55,8 @@ Instructions on how to install, configure, and get the project running locally.
 2. Add necessary configuration variables in the `.env` file.
    Example:
    ```bash
-    PORT=3000
-    DB_URL=your_db_connection_uri
-    API_KEY=your_api_key_here
+   VITE_SERVER_LOCAL_URL=http://localhost:7000/api
+
+    VITE_SERVER_HOST_URL=https://washngo-server.onrender.com/api
    ```
-3. Explain any specific configuration requirements or variables used in your project.
-
-## Usage
-
-Instructions or examples for using the project. Include screenshots or code snippets if applicable.
+---

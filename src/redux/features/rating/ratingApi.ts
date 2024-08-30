@@ -13,7 +13,7 @@ const ratingApi = baseApi.injectEndpoints({
         }
 
         return {
-          url: `/rating//all`,
+          url: `/rating/all`,
           params: query,
         };
       },

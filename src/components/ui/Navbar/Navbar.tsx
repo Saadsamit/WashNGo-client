@@ -66,7 +66,7 @@ const Navbar = () => {
       {!isComplete && (
         <nav className="bg-hover">
           {!isLoading && data && (
-            <Container className="pb-0 pt-1">
+            <Container className="!pb-0 pt-1">
               <div className="flex text-white justify-between">
                 <Title level={5} className="!font-bold !text-white !mr-2">
                   Upcoming Slot:{" "}

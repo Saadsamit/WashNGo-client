@@ -22,6 +22,7 @@ const ServiceCard = ({ data }: TServiceCard) => {
   };
   return (
     <Card
+     className="!border !border-primary"
       style={{ minHeight: "410px" }}
       cover={<img alt={data?.name} className="h-60" src={data?.image} />}
     >

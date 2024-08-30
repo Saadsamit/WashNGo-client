@@ -124,20 +124,22 @@ const SlotManagement = () => {
   };
 
   const handleSubmit = async (e: any) => {
-    setLoading(true)
-    e.preventDefault();
-    const result = await createSlot({
-      date,
-      startTime,
-      endTime,
-      service: serviceId,
-    }).unwrap();
-    if (result?.success) {
-      setLoading(false)
-      toast.success(result?.message);
-      setModal(false);
+    try {
+      setLoading(true);
+      e.preventDefault();
+      const result = await createSlot({
+        date,
+        startTime,
+        endTime,
+        service: serviceId,
+      }).unwrap();
+      if (result?.success) {
+        toast.success(result?.message);
+        setModal(false);
+      }
+    } catch (err) {
+      setLoading(false);
     }
-    setLoading(false)
   };
 
   const combined: TCombined[] = serviceData?.data?.map((service: TService) => ({
@@ -146,7 +148,6 @@ const SlotManagement = () => {
       (slot: TSlot) => slot?.service?._id === service?._id
     ),
   }));
-
   const tableData: DataType[] = combined?.map((item: TCombined) => ({
     key: item?._id,
     image: <img src={item?.image} alt={item?.image} className="w-12" />,
@@ -169,7 +170,6 @@ const SlotManagement = () => {
           action: (
             <Select
               defaultValue={slotItem?.isBooked}
-              placeholder={"Role"}
               style={{ width: 120 }}
               onChange={(e) => slotStatusChange(e, slotItem?._id)}
               options={slotStatus}
